@@ -1,10 +1,14 @@
 package eu.michalszyba.suncode.controller;
 
+import eu.michalszyba.suncode.model.Product;
 import eu.michalszyba.suncode.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -15,21 +19,31 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/duplicates/{columnName}")
-    public String showDuplicates(Model model, @PathVariable String columnName) {
+    @ModelAttribute("columns")
+    public List<String> populateColumns() {
+        List<String> fields = new ArrayList<>();
+        for (Field field : Product.class.getDeclaredFields()) {
+            fields.add(field.getName());
+        }
+        return fields;
+    }
+
+    @GetMapping("/duplicates")
+    public String getDuplicates(@RequestParam("column") String columnName, Model model) {
         model.addAttribute("duplicates", productService.findDuplicates(columnName));
         return "duplicates";
     }
 
-    @GetMapping("/unique/{columnName}")
-    public String shoqUnique(Model model, @PathVariable String columnName) {
+    @GetMapping("/unique")
+    public String getUnique(@RequestParam("column") String columnName,  Model model) {
         model.addAttribute("unique", productService.findUnique(columnName));
         return "unique";
     }
 
-    @GetMapping("/home/all")
+    @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("products", productService.findAll());
         return "index";
     }
+
 }

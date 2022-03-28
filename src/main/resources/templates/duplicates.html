@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Workshop">
-  <meta name="author" content="m.szyba@gmail.com">
-  <title>Workshop</title>
+<head th:replace="framents :: baseHeader">
+  <title></title>
 </head>
+
 <body>
-TEST
+<div class="container">
+  <div id="form" th:replace="framents :: form">
+  </div>
 
-<table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>kolumna 1</th>
-    <th>kolumna 2</th>
-    <th>kolumna 3</th>
-    <th>kolumna 4</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="p : ${duplicates}">
-    <td th:text="${p.id}"></td>
-    <td th:text="${p.kolumna1}"></td>
-    <td th:text="${p.kolumna2}"></td>
-    <td th:text="${p.kolumna3}"></td>
-    <td th:text="${p.kolumna4}"></td>
-  </tr>
-  </tbody>
-</table>
+  <div class="row justify-content-md-center">
+    <div class="col">
 
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>kolumna 1</th>
+          <th>kolumna 2</th>
+          <th>kolumna 3</th>
+          <th>kolumna 4</th>
+        </tr>
+        </thead>
+        <tbody class="table-hover">
+        <tr th:each="p : ${duplicates}">
+          <td th:text="${p.id}"></td>
+          <td th:text="${p.kolumna1}"></td>
+          <td th:text="${p.kolumna2}"></td>
+          <td th:text="${p.kolumna3}"></td>
+          <td th:text="${p.kolumna4}"></td>
+        </tr>
+        </tbody>
+      </table>
 
-
+    </div>
+  </div>
+</div>
 </body>
 </html>
