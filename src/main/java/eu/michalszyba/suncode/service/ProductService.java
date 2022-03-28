@@ -19,9 +19,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-
     public List<Product> findDuplicates(String columnName) {
         switch (columnName) {
+            case "id":
+                return productRepository.findDuplicatesCol0();
             case "kolumna1":
                 return productRepository.findDuplicatesCol1();
             case "kolumna2":
@@ -36,6 +37,8 @@ public class ProductService {
 
     public List<Product> findUnique(String columnName) {
         switch (columnName) {
+            case "id":
+                return productRepository.findUniqueCol0();
             case "kolumna1":
                 return productRepository.findUniqueCol1();
             case "kolumna2":
