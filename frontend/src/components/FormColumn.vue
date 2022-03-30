@@ -5,7 +5,7 @@
       <form id="unique">
         <label>Choose unique: </label>
         <select class="form-select">
-          <option selected disabled value="">Please select one</option>
+          <option value="" >Please select one</option>
           <option
               v-for="(column, index) in columns" :key="index"
               v-bind:value="column.value"> {{column}} </option>
