@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>TESTOWY</h1>
+    <h1>ProductList</h1>
 <div class="container-fluid">
     <table class="table table-hover">
       <thead>
@@ -31,7 +31,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'ProdList',
+  name: 'ProductList',
   mounted: function () {
     this.getProd()
   },
@@ -43,7 +43,7 @@ export default {
   methods: {
     getProd: function () {
       let self = this;
-      const url = 'http://localhost:8080/api/prod'
+      const url = 'http://localhost:8080/api/products'
       axios.get(url, {
         dataType: 'json',
         headers: {
@@ -62,10 +62,7 @@ export default {
     }
   }
 }
-
-
 </script>
 
 <style scoped>
-
 </style>
