@@ -24,7 +24,6 @@ public class ProductRestController {
         this.productService = productService;
     }
 
-//    @ModelAttribute("columns")
     @GetMapping("/columns")
     public List<String> populateColumns() {
         List<String> fields = new ArrayList<>();
@@ -38,7 +37,6 @@ public class ProductRestController {
     public ResponseEntity<Object> getAllProducts() {
         try {
             Iterable<Product> products = productService.findAll();
-            logger.debug(String.valueOf(productService.findAll().get(1).getKolumna1()));
             return new ResponseEntity<>(products, HttpStatus.OK);
         } catch (Exception exception) {
             logger.error(exception.getMessage(), exception);
@@ -46,14 +44,25 @@ public class ProductRestController {
         }
     }
 
-//    @GetMapping("/hello")
-//    public String hello() {
-//        return "Full STACK JAVA MICHAL";
-//    }
+    @GetMapping("/duplicates/{columnName}")
+    public ResponseEntity<Object> getDuplicates(@PathVariable String columnName) {
+        try {
+            Iterable<Product> duplicates = productService.findDuplicates(columnName);
+            return new ResponseEntity<>(duplicates, HttpStatus.OK);
+        } catch (Exception exception) {
+            logger.error(exception.getMessage(), exception);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-//    @GetMapping("/prod")
-//    public List<Product> getProd() {
-//        List<Product> productList = productService.findAll();
-//        return productList;
-//    }
+    @GetMapping("/unique/{columnName}")
+    public ResponseEntity<Object> getUnique(@PathVariable String columnName) {
+        try {
+            Iterable<Product> duplicates = productService.findUnique(columnName);
+            return new ResponseEntity<>(duplicates, HttpStatus.OK);
+        } catch (Exception exception) {
+            logger.error(exception.getMessage(), exception);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

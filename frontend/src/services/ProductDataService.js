@@ -9,13 +9,13 @@ class ProductDataService {
         return http.get("/columns");
     }
 
-    // findDuplicates(columnName) {
-    //     return http.get('/products/duplicates/${columnName}')
-    // }
-    //
-    // findUnique(columnName) {
-    //     return http.get('/products/unique/${columnName}')
-    // }
+    findDuplicates(columnName) {
+        return http.get(`/duplicates/${columnName}`);
+    }
+
+    findUnique(columnName) {
+        return http.get(`/unique/${columnName}`)
+    }
 }
 
 export default new ProductDataService();

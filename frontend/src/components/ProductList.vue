@@ -1,32 +1,39 @@
 <template>
-    <h1>ProductList</h1>
-    <div class="row justify-content-between">
-      <div class="col-4">
-        <form id="unique">
-          <label>Choose unique: </label>
-          <select class="form-select">
-            <option value="">Please select one</option>
+    <h1 class="text-center">ProductList</h1>
+    <div class="text-center">
+      <div class="col-12 text-center">
+        <form>
+          <label>Choose name of column: </label>
+          <select class="form-select"
+                  v-model="nameColumn">
+            <option class="text-center" disabled value="">Please select one</option>
             <option
+                class="text-center"
                 v-for="(column, index) in columns" :key="index"
-                v-bind:value="column.value"> {{column}} </option>
+                v-bind:value="column"
+            > {{ column }} </option>
           </select>
-        </form>
-      </div>
 
-      <div class="col-4">
-        <form id="duplicates">
-          <label>Choose duplicates: </label>
-          <select class="form-select">
-            <option selected disabled value="">Please select one</option>
-            <option
-                v-for="(column, index) in columns" :key="index"
-                v-bind:value="column.value"> {{column}} </option>
-          </select>
+          <div class="row justify-content-between">
+            <div class="col-4 text-center">
+              <button class="btn btn-outline-secondary"
+                      type="button"
+                      @click="searchDuplicates"
+              >Search Duplicates</button>
+            </div>
+            <div class="col-4 text-center">
+
+              <button class="btn btn-outline-secondary"
+                      type="button"
+                      @click="searchUnique"
+              >Search Unique</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
-    <div class="container">
 
+    <div class="container">
       <div class="container-fluid">
         <table class="table table-hover">
           <thead>
@@ -62,15 +69,13 @@ export default {
     return {
       productList: [],
       columns: [],
-      selected: ""
     };
   },
   methods: {
-    retrieveProducts() {
+    getAllProducts() {
       ProductDataService.getAll()
         .then(response => {
           this.productList = response.data;
-          console.log(response.data);
         })
         .catch(e => {
           console.log(e);
@@ -80,16 +85,35 @@ export default {
       ProductDataService.getColumnsName()
         .then(response => {
           this.columns = response.data;
-          console.log(response.data)
         })
         .catch(e => {
           console.log(e);
         });
+    },
+    searchDuplicates() {
+      ProductDataService.findDuplicates(this.nameColumn)
+          .then(response => {
+            this.productList = response.data;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+    },
+    searchUnique() {
+      ProductDataService.findUnique(this.nameColumn)
+          .then(response => {
+            this.productList = response.data;
+          })
+          .catch(e => {
+            console.log(e);
+          });
     }
   },
   mounted() {
-    this.retrieveProducts();
+    this.getAllProducts()
     this.getColumns();
+    this.searchDuplicates();
+    this.searchUnique();
   }
 }
 
