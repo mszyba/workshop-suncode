@@ -8,7 +8,7 @@ services:
     networks:
       - suncode-postgres
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres-5432" ]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -17,16 +17,17 @@ services:
     ports:
       - "5432:5432"
 
-  app:
+  backend:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: suncode-app
+    container_name: backend
     ports:
       - "8080:8080"
     restart: on-failure
     networks:
       - suncode-postgres
+      - frontback
     depends_on:
       - postgres-5432
     env_file:
@@ -34,6 +35,20 @@ services:
     tty: true
     stdin_open: true
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - frontback
+
 networks:
   suncode-postgres:
+    driver: bridge
+  frontback:
     driver: bridge
