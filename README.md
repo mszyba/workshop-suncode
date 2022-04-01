@@ -1,6 +1,4 @@
-## http://workshop.michalszyba.eu/home
-
-#How to run?
+###How to run?
 
 Clone repository first
 
