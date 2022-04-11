@@ -2,12 +2,12 @@
 
 Clone repository first
 
-`git clone https://github.com/mszyba/workshop-suncode.git`
+`git clone https://github.com/mszyba/workshop-v3.git`
 
 run:
 
 ```
-cd worhshop-suncode
+cd worhshop-v3
 mvn clean
 mvn package -DskipTests
 ```
